@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AuthLayout from './layout/AuthLayout'
-import SignupForm from './forms/SignupForm.jsx'
+import SignupForm from './forms/SignupForm'
+import LogInForm from './forms/LogInForm'
+
 const AuthPage = () => {
+  const [showLogin, setShowLogin] = useState(false)
+
   return (
-    <AuthLayout><SignupForm/></AuthLayout>
+    <AuthLayout>
+      {showLogin ? (
+        <LogInForm onSwitchForm={() => setShowLogin(false)} />
+      ) : (
+        <SignupForm onSwitchForm={() => setShowLogin(true)} />
+      )}
+    </AuthLayout>
   )
 }
 
