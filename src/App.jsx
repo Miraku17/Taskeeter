@@ -1,8 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import AuthPage from "./components/auth/AuthPage";
-import Home from "./pages/Home";
-import ProtectedRoute from "./components/ProtectedRoute";
+import AuthPage from "@/components/auth/AuthPage";
+// import Home from "./pages/Home";
+import Home from '@/pages/home'
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const App = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
