@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 // import AuthLayout from '/layout/AuthLayout'
 import AuthLayout from '@/components/auth/layout/AuthLayout'
 import SignupForm from '@/components/auth/forms/SignupForm'
-import LoginForm from '@/components/auth/forms/LogInForm'
+import LoginForm from '@/components/auth/forms/LoginForm.jsx'
 
 const AuthPage = () => {
   const [showLogin, setShowLogin] = useState(true)
