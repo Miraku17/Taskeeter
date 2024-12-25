@@ -1,11 +1,41 @@
-import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import AuthPage from "./components/auth/AuthPage";
+import Home from "./pages/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 const App = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <div className="bg-white min-h-screen flex font-['Lexend_Deca']">
-      <AuthPage isLogin={isLogin} />
+      <Routes>
+        {/* Public auth route */}
+        <Route 
+          path="/auth" 
+          element={
+            isAuthenticated ? <Navigate to="/home" replace /> : <AuthPage />
+          } 
+        />
+        
+        {/* Protected home route */}
+        <Route 
+          path="/home" 
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          } 
+        />
+        
+        {/* Root route redirect */}
+        <Route 
+          path="/" 
+          element={
+            <Navigate to={isAuthenticated ? "/home" : "/auth"} replace />
+          } 
+        />
+      </Routes>
     </div>
   );
 };

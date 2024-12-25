@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../../features/user/userSlice";
+import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ onSwitchForm }) => {
   const dispatch = useDispatch();
   const { loading, error: reduxError } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +26,8 @@ const SignupForm = ({ onSwitchForm }) => {
       await dispatch(registerUser({ name, email, password })).unwrap();
       // Handle successful registration (e.g., redirect or show success message)
       console.log("Registration successful!");
+      navigate('/home');
+
     } catch (err) {
       setError(err.message || "Registration failed. Please try again.");
     }
@@ -62,7 +65,7 @@ const SignupForm = ({ onSwitchForm }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 max-w-2xl">
+    <div className="flex flex-col gap-4 max-w-2xl text-black">
       <h1 className="font-semibold text-7xl text-black">Join Tasketeer</h1>
 
       <div className="space-y-5">
@@ -84,7 +87,7 @@ const SignupForm = ({ onSwitchForm }) => {
               placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white"
               required
             />
           </div>
@@ -102,7 +105,7 @@ const SignupForm = ({ onSwitchForm }) => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white"
               required
             />
           </div>
@@ -120,7 +123,7 @@ const SignupForm = ({ onSwitchForm }) => {
               placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white"
               required
             />
           </div>

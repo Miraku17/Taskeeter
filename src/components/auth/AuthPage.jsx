@@ -4,7 +4,7 @@ import SignupForm from './forms/SignupForm'
 import LogInForm from './forms/LogInForm'
 
 const AuthPage = () => {
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(true)
 
   return (
     <AuthLayout>

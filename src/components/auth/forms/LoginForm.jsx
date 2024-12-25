@@ -1,6 +1,11 @@
 import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUser } from "../../../features/user/userSlice";
 
 const LogInForm = ({ onSwitchForm }) => {
+  const dispatch = useDispatch()
+  const { loading, error: authError } = useSelector((state) => state.user)
+  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -14,18 +19,25 @@ const LogInForm = ({ onSwitchForm }) => {
       return
     }
 
-    // Add your login logic here
     try {
-      // await loginUser(email, password)
-      console.log("Logging in with:", { email, password })
+      const result = await dispatch(loginUser({ email, password })).unwrap()
+      if (result.user) {
+        // You can add navigation logic here if needed
+        console.log("Login successful")
+        navigate('/home');
+
+      }
     } catch (err) {
-      setError("Invalid email or password")
+      setError(err.message || "Invalid email or password")
     }
   }
 
+  // Use Redux error if available, otherwise use local error
+  const displayError = authError || error
+
   return (
     <>
-      <div className="flex flex-col gap-4 max-w-2xl">
+      <div className="flex flex-col gap-4 max-w-2xl text-black">
         <h1 className="font-semibold text-7xl text-black">Welcome Back</h1>
 
         <div className="space-y-5">
@@ -44,8 +56,9 @@ const LogInForm = ({ onSwitchForm }) => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white"
                 required
+                disabled={loading}
               />
             </div>
 
@@ -59,23 +72,25 @@ const LogInForm = ({ onSwitchForm }) => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white"
                 required
+                disabled={loading}
               />
             </div>
 
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
+            {displayError && (
+              <p className="text-red-500 text-sm">{displayError}</p>
             )}
 
             <button
               type="submit"
-              className="w-full bg-yellow-400 text-black py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors font-medium"
+              disabled={loading}
+              className={`w-full bg-yellow-400 text-black py-3 px-4 rounded-lg hover:bg-yellow-500 transition-colors font-medium ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </button>
-
-       
           </form>
 
           <div className="pt-4">
