@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GreetingCard from "../components/greeting/greetingCard";
-import { fetchQuote } from "../features/quote/quoteSlice";
+import GreetingCard from "@/components/greeting/greetingCard";
+import { fetchQuote } from "@/features/quote/quoteSlice";
 
 const Home = () => {
   const dispatch = useDispatch();

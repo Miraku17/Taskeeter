@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { loginUser } from "../../../features/user/userSlice";
-
+import { loginUser } from "@/features/user/userSlice"
 const LogInForm = ({ onSwitchForm }) => {
   const dispatch = useDispatch()
   const { loading, error: authError } = useSelector((state) => state.user)

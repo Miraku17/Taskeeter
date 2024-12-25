@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../../features/user/userSlice";
+import { registerUser } from "@/features/user/userSlice";
 import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ onSwitchForm }) => {
