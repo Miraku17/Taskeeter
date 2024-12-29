@@ -1,11 +1,19 @@
-// src/utils/axios.js
-import axios from 'axios'
+// utils/axios.js
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
+    baseURL: 'http://localhost:3000/api'
+});
 
-export default api
+api.interceptors.request.use((config) => {
+    let token = localStorage.getItem('token');
+    
+    // Remove quotes if they exist
+    if (token) {
+        token = token.replace(/^"|"$/g, '');
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+export default api;

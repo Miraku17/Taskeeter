@@ -53,6 +53,23 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Logout thunk
+export const logoutUser = createAsyncThunk(
+  "user/logout",
+  async (_, { dispatch }) => {
+    try {
+      // Dispatch the existing synchronous logout action
+      dispatch(logout());
+      return true;
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Ensure logout happens even if there's an error
+      dispatch(logout());
+      return true;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -121,6 +138,16 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
         state.isAuthenticated = false;
+      })
+      // Logout cases
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(logoutUser.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
